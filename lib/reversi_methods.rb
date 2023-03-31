@@ -90,8 +90,15 @@ def pos_stone_color(board, col, row)
 end
 
 def finished?(board)
-  
-  false
+  if board.all? { |cols| cols.none? { |cell| cell == 0 } }
+    true
+  elsif board.all? { |cols| cols.none? { |cell| cell == 1 } }
+    true
+  elsif board.all? { |cols| cols.none? { |cell| cell == 2 } }
+    true
+  else
+    false
+  end
 end
 
 def placeable?(board, attack_stone_color)
