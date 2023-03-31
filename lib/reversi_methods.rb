@@ -58,7 +58,7 @@ def put_stone!(board, cellstr, stone_color, execute = true) # rubocop:disable St
   DIRECTIONS.each do |direction|
     next_pos = pos.next_position(direction)
     next_pos_color = pos_stone_color(copied_board, next_pos.col, next_pos.row)
-    next if next_pos_color == stone_color || next_pos_color.zero?
+    next if next_pos_color == stone_color || next_pos_color == 0
 
     turn_succeed = true if turn!(copied_board, next_pos, stone_color, direction)
   end
