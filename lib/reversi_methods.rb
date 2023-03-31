@@ -90,15 +90,10 @@ def pos_stone_color(board, col, row)
 end
 
 def finished?(board)
-  if board.all? { |cols| cols.none? { |cell| cell.zero? } }
-    true
-  elsif board.all? { |cols| cols.none? { |cell| cell == 1 } }
-    true
-  elsif board.all? { |cols| cols.none? { |cell| cell == 2 } }
-    true
-  else
-    false
+  [WHITE_STONE, BLACK_STONE, BLANK_CELL].each do |color|
+    return true if board.flatten.none? { |stone_color| stone_color == color }
   end
+  false
 end
 
 def placeable?(board, attack_stone_color)
