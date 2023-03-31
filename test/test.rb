@@ -2,7 +2,6 @@
 
 require 'minitest/autorun'
 require_relative '../lib/reversi_methods'
-require 'debug'
 
 def build_board(filename)
   target_file = File.join(File.dirname(__FILE__), filename)
