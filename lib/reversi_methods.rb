@@ -58,7 +58,7 @@ def put_stone!(board, cellstr, stone_color, execute = true) # rubocop:disable St
   DIRECTIONS.each do |direction|
     next_pos = pos.next_position(direction)
     next_pos_color = pos_stone_color(copied_board, next_pos.col, next_pos.row)
-    next if next_pos_color == stone_color
+    next if next_pos_color == stone_color || next_pos_color == BLANK_CELL
 
     turn_succeed = true if turn!(copied_board, next_pos, stone_color, direction)
   end
@@ -73,7 +73,7 @@ def turn!(board, target_pos, attack_stone_color, direction)
   return false if target_pos.out_of_board?
 
   next_pos = target_pos.next_position(direction)
-  next_stone = pos_stone_color(board, next_pos.row, next_pos.col)
+  next_stone = pos_stone_color(board, next_pos.col, next_pos.row)
 
   if (next_stone == attack_stone_color) || turn!(board, next_pos, attack_stone_color, direction)
     board[target_pos.col][target_pos.row] = attack_stone_color
@@ -83,13 +83,16 @@ def turn!(board, target_pos, attack_stone_color, direction)
   end
 end
 
-def pos_stone_color(board, row, col)
+def pos_stone_color(board, col, row)
   return nil unless (0..7).cover?(row) && (0..7).cover?(col)
 
   board[col][row]
 end
 
 def finished?(board)
+  [WHITE_STONE, BLACK_STONE, BLANK_CELL].each do |color|
+    return true if board.flatten.none? { |stone_color| stone_color == color }
+  end
   false
 end
 
